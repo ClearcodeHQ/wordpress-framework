@@ -53,10 +53,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
 			$name = str_replace( '_', '-', $name );
 			$name = trim( $name, '/' );
 
-			if ( is_file( $file = static::$dir . '/includes/' . $name . '.php' ) ) require_once( $file );
+			if ( is_file( $file = static::$dir . 'includes/' . $name . '.php' ) ) require_once( $file );
 		}
 
-		static protected function set_plugin_data( $file ) {
+		static public function set_plugin_data( $file ) {
 			$data = get_plugin_data( $file );
 
 			$data['plugin_uri']  = $data['PluginURI'];
@@ -79,7 +79,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
 			$data['dir']       = plugin_dir_path( $file );
 			$data['url']       = plugin_dir_url(  $file );
 			$data['slug']      = basename( dirname( $file ) );
-			$data['namespace'] = __NAMESPACE__;
+			$data['namespace'] = static::class;
 
 			foreach( $data as $key => $value ) {
 				$key = strtolower( $key );
@@ -87,9 +87,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
 			}
 		}
 
-		protected function __construct( $file ) {
-			static::set_plugin_data( $file );
-
+		protected function __construct() {
 			register_activation_hook(   static::$file, array( $this, 'activation'   ) );
 			register_deactivation_hook( static::$file, array( $this, 'deactivation' ) );
 
@@ -133,9 +131,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
 			if ( empty( $plugin_data['Name'] ) ) return $plugin_meta;
 			if ( static::$name == $plugin_data['Name'] ) {
 				$plugin_meta[] = static::__( 'Author' ) . ' ' . static::get_template( 'link', array(
-						'url'  => 'http://piotr.press/',
-						'link' => 'PiotrPress'
-					) );
+                    'url'  => 'http://piotr.press/',
+                    'link' => 'PiotrPress'
+                ) );
 			}
 
 			return $plugin_meta;
