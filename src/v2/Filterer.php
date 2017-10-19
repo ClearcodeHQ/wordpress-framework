@@ -21,7 +21,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v1;
+namespace Clearcode\Framework\v2;
 
 use ReflectionClass;
 use ReflectionMethod;
@@ -37,7 +37,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Filterer' ) ) {
 					$priority = $this->get_priority( $method->getName() );
 					$args     = $method->getNumberOfParameters();
 
-					add_filter( $hook, array( $this, $method->getName() ), $priority, $args );
+					add_filter( $hook, [ $this, $method->getName() ], $priority, $args );
 				}
 			}
 		}
@@ -66,7 +66,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Filterer' ) ) {
 		}
 
 		protected function is_hook( $method ) {
-			foreach ( array( 'filter', 'action' ) as $hook ) {
+			foreach ( [ 'filter', 'action' ] as $hook ) {
 				if ( 0 === strpos( $method, $hook . '_' ) ) {
 					return $hook;
 				}
@@ -76,12 +76,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Filterer' ) ) {
 		}
 
 		static public function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
-			return add_filter( static::$namespace . '\\' . $tag, $function_to_add, $priority, $accepted_args );
+			return add_filter( static::class . '\\' . $tag, $function_to_add, $priority, $accepted_args );
 		}
 
 		static public function apply_filters( $tag, $value ) {
 			$args    = func_get_args();
-			$args[0] = static::$namespace . '\\' . $args[0];
+			$args[0] = static::class . '\\' . $args[0];
 
 			return call_user_func_array( 'apply_filters', $args );
 		}

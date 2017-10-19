@@ -21,7 +21,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v1;
+namespace Clearcode\Framework\v2;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists( __NAMESPACE__ . '\Singleton' ) ) {
@@ -37,13 +37,13 @@ if ( ! class_exists( __NAMESPACE__ . '\Singleton' ) ) {
 			_doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
 		}
 
-		public static function instance() {
+		static public function instance() {
 			static $instance = null;
 
 			if ( $instance ) return $instance;
 
 			$args   = func_get_args();
-			$params = array();
+			$params = [];
 			for ( $num = 0; $num < func_num_args(); $num ++ )
 				$params[] = sprintf( '$args[%s]', $num );
 
