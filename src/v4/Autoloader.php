@@ -21,36 +21,23 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v3;
+namespace Clearcode\Framework\v4;
+
+use Composer\Autoload\ClassLoader;
 
 defined( 'ABSPATH' ) or exit;
 
-if ( ! trait_exists( __NAMESPACE__ . '\Singleton' ) ) {
-    trait Singleton {
-        final private function __clone() {
-            _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
-        }
-        final private function __wakeup() {
-            _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
-        }
-        
-        protected function __construct() {
-            _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
-        }
+if ( ! class_exists( __NAMESPACE__ . '\Autoloader' ) ) {
+    class Autoloader extends ClassLoader {
+        public function __construct( $map ) {
+            foreach ( $map as $namespace => $paths ) {
+                $separator = '\\';
+                if ( $namespace{-1} != $separator ) $namespace .= $separator;
 
-        static public function instance() {
-            static $instance = null;
+                $this->addPsr4( $namespace, $paths );
+            }
 
-            if ( $instance ) return $instance;
-
-            $args   = func_get_args();
-            $params = [];
-            for ( $num = 0; $num < func_num_args(); $num ++ )
-                $params[] = sprintf( '$args[%s]', $num );
-
-            eval( sprintf( '$instance = new static( %s );', implode( ', ', $params ) ) );
-
-            return $instance;
+            $this->register();
         }
     }
 }

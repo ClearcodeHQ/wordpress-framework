@@ -21,7 +21,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v3;
+namespace Clearcode\Framework\v4;
 
 use ReflectionClass;
 use ReflectionMethod;

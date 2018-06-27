@@ -21,7 +21,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v3;
+namespace Clearcode\Framework\v4;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -47,8 +47,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
         protected $slug        = '';
 
         protected function set_plugin_data( $file ) {
-            if ( ! function_exists( 'get_plugin_data' ) )
-                require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+            if ( ! function_exists( 'get_plugin_data' ) ) require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
             $data = get_plugin_data( $file );
 
@@ -63,9 +62,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
                 'AuthorURI',
                 'TextDomain',
                 'DomainPath',
-                'AuthorName' ] as $key ) {
-                unset( $data[$key] );
-            }
+                'AuthorName' ] as $key ) unset( $data[$key] );
 
             $data['file']     = $file;
             $data['basename'] = plugin_basename(   $file   );
@@ -153,8 +150,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
         }
 
         static public function render( $template, $vars = [] ) {
-            $template = static::get( 'dir' ) . 'templates/' . $template . '.php';
-            $template = static::apply_filters( 'template', $template, $vars );
+            $template = static::apply_filters( 'template', static::get( 'dir' ) . $template . '.php', $template, $vars );
             if ( ! is_file( $template ) ) return false;
 
             $vars = static::apply_filters( 'vars', $vars, $template );
