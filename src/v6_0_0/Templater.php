@@ -21,39 +21,28 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v5;
-
-use ReflectionClass;
+namespace Clearcode\Framework\v6_0_0;
 
 defined( 'ABSPATH' ) or exit;
 
-if ( ! trait_exists( __NAMESPACE__ . '\Singleton' ) ) {
-    trait Singleton {
-        final private function __clone() {
-            _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
-        }
-        final private function __wakeup() {
-            _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
-        }
-        
-        protected function __construct() {
-            _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
+if ( ! class_exists( __NAMESPACE__ . '\Templater' ) ) {
+    class Templater {
+        protected $dir = '';
+
+        public function __construct( string $dir = '' ) {
+            if ( is_dir( $dir ) ) $this->dir = trailingslashit( $dir );
         }
 
-        static public function instance() {
-            static $instance = null;
+        public function render( string $file, array $vars = [] ) {
+            if ( ! is_file( $template = $this->dir . $file ) )
+                if ( ! is_file( $template .= '.php' ) ) return false;
 
-            if ( $instance ) return $instance;
+            extract( $vars, EXTR_SKIP );
 
-            $reflection = new ReflectionClass( static::class );
+            ob_start();
+            include $template;
 
-            $instance = $reflection->newInstanceWithoutConstructor();
-
-            $constructor = $reflection->getConstructor();
-            $constructor->setAccessible( true );
-            $constructor->invokeArgs( $instance, func_get_args() );
-
-            return $instance;
+            return ob_get_clean();
         }
     }
 }

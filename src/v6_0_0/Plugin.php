@@ -21,7 +21,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v5;
+namespace Clearcode\Framework\v6_0_0;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -147,19 +147,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
 
         static public function __( $text ) {
             return __( $text, static::get( 'text_domain' ) );
-        }
-
-        static public function render( $template, $vars = [] ) {
-            $template = static::apply_filters( 'template', static::get( 'dir' ) . $template . '.php', $template, $vars );
-            if ( ! is_file( $template ) ) return false;
-
-            $vars = static::apply_filters( 'vars', $vars, $template );
-            if ( is_array( $vars ) ) extract( $vars, EXTR_SKIP );
-
-            ob_start();
-            include $template;
-
-            return ob_get_clean();
         }
 
         static public function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
