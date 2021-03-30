@@ -5,7 +5,7 @@
 # Installation
 
 ```console
-$ composer create-project clearcode/wordpress-framework {directory}
+$ composer create-project clearcode/wordpress-framework <directory>
 ```
 
 # License

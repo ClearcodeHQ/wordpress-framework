@@ -21,7 +21,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v6_1_0;
+namespace Clearcode\Framework\v6_1_1;
 
 use ReflectionClass;
 
@@ -29,10 +29,10 @@ defined( 'ABSPATH' ) or exit;
 
 if ( ! trait_exists( __NAMESPACE__ . '\Singleton' ) ) {
     trait Singleton {
-        final private function __clone() {
+        private function __clone() {
             _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
         }
-        final private function __wakeup() {
+        public function __wakeup() {
             _doing_it_wrong( __METHOD__, __( 'Cheatin&#8217; uh?' ), '' );
         }
         
