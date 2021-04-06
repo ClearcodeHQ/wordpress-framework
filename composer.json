@@ -29,6 +29,9 @@
     "autoload": {
         "psr-4": {
             "Clearcode\\Framework\\": "src/"
-        }
+        },
+        "classmap": [
+            "src"
+        ]
     }
 }
