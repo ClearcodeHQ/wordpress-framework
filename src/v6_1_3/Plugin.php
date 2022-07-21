@@ -1,7 +1,7 @@
 <?php
 
 /*
-    Copyright (C) 2021 by Clearcode <https://clearcode.cc>
+    Copyright (C) 2022 by Clearcode <https://clearcode.cc>
     and associates (see AUTHORS.txt file).
 
     This file is part of clearcode/wordpress-framework.
@@ -21,7 +21,7 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-namespace Clearcode\Framework\v6_1_2;
+namespace Clearcode\Framework\v6_1_3;
 
 defined( 'ABSPATH' ) or exit;
 
@@ -137,7 +137,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Plugin' ) ) {
         }
 
         public function action_init_0(){
-            load_plugin_textdomain( static::get( 'text_domain' ), false, static::get( 'dir' ) . static::get( 'domain_path' ) );
+            load_plugin_textdomain( static::get( 'text_domain' ), false, static::get( 'slug' ) . static::get( 'domain_path' ) );
         }
 
         static public function get( $name ) {
